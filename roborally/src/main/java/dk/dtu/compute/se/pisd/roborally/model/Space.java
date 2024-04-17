@@ -35,15 +35,23 @@ import java.util.List;
  */
 public class Space extends Subject {
 
-    private Player player;
-
-    private List<Heading> walls = new ArrayList<>();
-    private List<FieldAction> actions = new ArrayList<>();
-
     public final Board board;
 
     public final int x;
     public final int y;
+    private Player player;
+
+    private List<FieldAction> actions = new ArrayList<>();
+
+    private List<Heading> walls = new ArrayList<>();
+
+    public List<Heading> getWalls() {
+        return walls;
+    }
+
+    public List<FieldAction> getActions() {
+        return actions;
+    }
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -70,14 +78,6 @@ public class Space extends Subject {
             }
             notifyChange();
         }
-    }
-
-    public List<Heading> getWalls() {
-        return walls;
-    }
-
-    public List<FieldAction> getActions() {
-        return actions;
     }
 
     void playerChanged() {

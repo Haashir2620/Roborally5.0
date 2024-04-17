@@ -26,19 +26,16 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import java.util.List;
 
 /**
- * ...
- *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public interface IRepository {
-	
- 	boolean createGameInDB(Board game);
-	
+
+	boolean createGameInDB(Board game, int k);
+
 	boolean updateGameInDB(Board game);
-	
+
 	Board loadGameFromDB(int id);
-	
+
 	List<GameInDB> getGames();
 
 }

@@ -27,10 +27,18 @@ import org.jetbrains.annotations.NotNull;
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
- * ...
- *
+ * this class is the player class. it has everything there is to know about a player.
+ * The board it is on, the name, the color, checkpointvalue, hp, the space it is on, checpointcomplete, commandcardfield,
+ * and cards.
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ */
+
+/**
+ * added the checkpoint
+ */
+
+/**
+ * added hp
  */
 public class Player extends Subject {
 
@@ -44,14 +52,33 @@ public class Player extends Subject {
 
     private Space space;
     private Heading heading = SOUTH;
+    private int checkpointValue;
+    private int hp;
+
+    public int getCheckpointValue() {
+        return checkpointValue;
+    }
+
+    public void setCheckpointValue(int checkpointValue) {
+        this.checkpointValue = checkpointValue;
+    }
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    /**
+     *
+     * @param board
+     * @param color
+     * @param name
+     */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
         this.name = name;
         this.color = color;
+
+        checkpointValue = 0;
+        hp = 0;
 
         this.space = null;
 
@@ -92,10 +119,20 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Gets current space of Robot
+     *
+     * @return current space of Robot
+     */
     public Space getSpace() {
         return space;
     }
 
+    /**
+     * sets the current players robot in the space that taken in the parameter
+     *
+     * @param space the space you want to move the robot to.
+     */
     public void setSpace(Space space) {
         Space oldSpace = this.space;
         if (space != oldSpace &&
@@ -111,6 +148,11 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Returns the current direction of the robot
+     *
+     * @return the current direction of the robot
+     */
     public Heading getHeading() {
         return heading;
     }
@@ -129,8 +171,17 @@ public class Player extends Subject {
         return program[i];
     }
 
+
     public CommandCardField getCardField(int i) {
         return cards[i];
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
 }

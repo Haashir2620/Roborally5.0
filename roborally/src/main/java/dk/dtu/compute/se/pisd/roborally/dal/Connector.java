@@ -24,33 +24,39 @@ package dk.dtu.compute.se.pisd.roborally.dal;
 import com.mysql.cj.util.StringUtils;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.IOUtil;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * ...
- *
+ * the connector to the database
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 class Connector {
-	
-    private static final String HOST     = "localhost";
-    private static final int    PORT     = 3306;
-    private static final String DATABASE = "pisu";
-    private static final String USERNAME = "user";
-    private static final String PASSWORD = "";
 
-    private static final String DELIMITER = ";;";
-    
-    private Connection connection;
-        
-    Connector() {
-        try {
-			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
+	private static final String HOST = "127.0.0.1";
+	private static final int PORT = 3306;
+	private static final String DATABASE = "roborally";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "Rep68hfq";
+
+	private static final String DELIMITER = ";;";
+
+	private Connection connection;
+
+	/**
+	 * connects to the database with, the host, the port and the database. then it log ins with username and password.
+	 */
+	Connector() {
+		try {
+			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
+			//String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
 
 			createDatabaseSchema();
@@ -60,39 +66,56 @@ class Connector {
 			e.printStackTrace();
 			// Platform.exit();
 		}
-    }
-    
-    private void createDatabaseSchema() {
+	}
 
-    	String createTablesStatement =
-				IOUtil.readResource("schemas/createschema.sql");
+	/**
+	 * creates the databaseschema in mysql.
+	 */
+	private void createDatabaseSchema() {
 
-    	try {
-    		connection.setAutoCommit(false);
-    		Statement statement = connection.createStatement();
-    		for (String sql : createTablesStatement.split(DELIMITER)) {
-    			if (!StringUtils.isEmptyOrWhitespaceOnly(sql)) {
-    				statement.executeUpdate(sql);
-    			}
-    		}
+		String createTablesStatement;
+		try {
+			ClassLoader classLoader = Connector.class.getClassLoader();
+			URI uri = classLoader.getResource("schemas/createschema.sql").toURI();
+			byte[] bytes = Files.readAllBytes(Paths.get(uri));
+			createTablesStatement = new String(bytes);
+		} catch (URISyntaxException | IOException e) {
+			e.printStackTrace();
+			return;
+		}
 
-    		statement.close();
-    		connection.commit();
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    		// TODO error handling
-    		try {
+		try {
+			connection.setAutoCommit(false);
+			Statement statement = connection.createStatement();
+			for (String sql : createTablesStatement.split(DELIMITER)) {
+				if (!StringUtils.isEmptyOrWhitespaceOnly(sql)) {
+					statement.executeUpdate(sql);
+				}
+			}
+
+			statement.close();
+			connection.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// TODO error handling
+			try {
 				connection.rollback();
-			} catch (SQLException e1) {}
-    	} finally {
+			} catch (SQLException e1) {
+			}
+		} finally {
 			try {
 				connection.setAutoCommit(true);
-			} catch (SQLException e) {}
+			} catch (SQLException e) {
+			}
 		}
-    }
-    
-    Connection getConnection() {
-    	return connection; 
-    }
-    
+	}
+
+	/**
+	 * a method that you can call to get the connection.
+	 * @return the connection
+	 */
+	Connection getConnection() {
+		return connection;
+	}
+
 }

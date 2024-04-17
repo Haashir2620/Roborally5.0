@@ -41,13 +41,15 @@ public class Board extends Subject {
 
     public final int height;
 
+    public final String boardName;
+
     private Integer gameId;
 
     private final Space[][] spaces;
 
     private final List<Player> players = new ArrayList<>();
 
-    private Player current;
+    private Player currentPlayer;
 
     private Phase phase = INITIALISATION;
 
@@ -55,17 +57,51 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
-    public Board(int width, int height) {
+    private int moveCounter = 0;
+
+    /**
+     * Vi opretter en privat variabel som er vores counter
+     * Vi sætter den til 0
+     * Vi opretter en getter og en setter for variablen
+     * Setteren bruger notifyChange() til at orientere tilobserver at der er sket en ændring i programmet
+     */
+    public int getMoveCounter() {
+        return moveCounter;
+    }
+    //
+
+    public void setMoveCounter(int moveCounter) {
+        this.moveCounter = moveCounter;
+        notifyChange();
+    }
+
+    /**
+     * @param width how many spaces there should be on the x axis.
+     * @param height how many spaces there should be on the y axis.
+     * @param boardName the name on the board.
+     * This method tells what a board should include from the start.
+     */
+    public Board(int width, int height, @NotNull String boardName) {
+        this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
+            for (int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
             }
         }
         this.stepMode = false;
+    }
+
+    /**
+     * @param width how many spaces there should be on the x axis.
+     * @param height how many spaces there should be on the y axis.
+     * this method creates a board with a width, height and a name. the name is always defaulboard from the start.
+     */
+    public Board(int width, int height) {
+        this(width, height, "defaultboard");
     }
 
     public Integer getGameId() {
@@ -91,10 +127,21 @@ public class Board extends Subject {
         }
     }
 
+    public Space getRandomSpace() {
+        int x = (int) (Math.random()* width);
+        int y = (int) (Math.random()* height);
+        return getSpace(x,y);
+
+    }
+
     public int getPlayersNumber() {
         return players.size();
     }
 
+    /**
+     * @param player the player that is added to the board.
+     * this method adds a player to the board.
+     */
     public void addPlayer(@NotNull Player player) {
         if (player.board == this && !players.contains(player)) {
             players.add(player);
@@ -111,12 +158,12 @@ public class Board extends Subject {
     }
 
     public Player getCurrentPlayer() {
-        return current;
+        return currentPlayer;
     }
 
     public void setCurrentPlayer(Player player) {
-        if (player != this.current && players.contains(player)) {
-            this.current = player;
+        if (player != this.currentPlayer && players.contains(player)) {
+            this.currentPlayer = player;
             notifyChange();
         }
     }
@@ -132,6 +179,11 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This gives the current step of which programming card we are on with the individual player.
+     *
+     * @return the Current position in the programming cards
+     */
     public int getStep() {
         return step;
     }
@@ -143,6 +195,9 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * @return
+     */
     public boolean isStepMode() {
         return stepMode;
     }
@@ -168,24 +223,29 @@ public class Board extends Subject {
      * (no walls or obstacles in either of the involved spaces); otherwise,
      * null will be returned.
      *
-     * @param space the space for which the neighbour should be computed
+     * @param space   the space for which the neighbour should be computed
      * @param heading the heading of the neighbour
      * @return the space in the given direction; null if there is no (reachable) neighbour
      */
+
+
+    // Sæt væg tjek ind her.
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
-        if (space.getWalls().contains(heading)) {
-            return null;
-        }
-        // TODO needs to be implemented based on the actual spaces
-        //      and obstacles and walls placed there. For now it,
-        //      just calculates the next space in the respective
-        //      direction in a cyclic way.
-
-        // XXX an other option (not for now) would be that null represents a hole
-        //     or the edge of the board in which the players can fall
-
+        /**
+         *
+         * This Method returns the neighbouring space
+         * It takes the current space of the player and a heading as Parameters
+         * It then uses they these to determind the neighbouring space in a given direction.
+         * In adition it checks for walls that are between the space and its neighbour.
+         * heading1 checks for a wall on the players space that is facing the same way as the player
+         * heading2 checks for an opposite facing wall on the neighbouring.
+         * It does this by checking the if a List of wall the wall headings on the players currentfield contains a heading matching the players
+         * And if the opposite field has a wall heading facing the opposite way.
+         *
+         */
         int x = space.x;
         int y = space.y;
+
         switch (heading) {
             case SOUTH:
                 y = (y + 1) % height;
@@ -200,14 +260,84 @@ public class Board extends Subject {
                 x = (x + 1) % width;
                 break;
         }
-        Heading reverse = Heading.values()[(heading.ordinal() + 2)% Heading.values().length];
-        Space result = getSpace(x, y);
-        if (result != null) {
-            if (result.getWalls().contains(reverse)) {
-                return null;
-            }
+        Space space1 = this.getSpace(x, y);
+        Heading heading2 = heading.prev().prev();
+
+        if (space.getWalls().contains(heading)) {
+            return null;
         }
-        return result;
+        if (space1.getWalls().contains(heading2)) {
+            return null;
+        }
+
+        return getSpace(x, y);
+    }
+
+    /**
+     * Her har vi tilføjet antal slag til statuslinjen
+     * Vi bruger getMoveCounter() til at vise hvor mange slag der er sket i spillet
+     * Vi har også tilføjet et CheckpointValue til den så man kan se hvor mange chekpoints hver spiller har.
+     */
+    public String getStatusMessage() {
+        Board board = currentPlayer.board;
+        // this is actually a view aspect, but for making assignment V1 easy for
+        // the students, this method gives a string representation of the current
+        // status of the game
+
+        // XXX: V1 add the move count to the status message
+        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
+        if (board.getPhase() == Phase.GAME_ENDING) {
+
+            int i;
+            for (i = 0; i < board.getPlayersNumber(); ++i) {
+                Player player = board.getPlayer(i);
+                if (player.getCheckpointValue() == 6) {
+                    board.setCurrentPlayer(player);}
+            }
+            return winnermessage(board);
+        }
+
+        return "Phase: " + getPhase().name() +
+                ", Player = " + getCurrentPlayer().getName() +
+                ", Slag = " + getMoveCounter() + ", Checkpoints = " + getCurrentPlayer().getCheckpointValue() +
+                ", HP = " + getCurrentPlayer().getHp();
+
+
+    }
+    public String winnermessage(Board board) {
+        switch (board.getPlayersNumber()){
+            case 2:
+                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: "  +
+                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
+                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue();
+            case 3:
+                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: "  +
+                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
+                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
+                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue();
+            case 4:
+                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
+                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
+                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
+                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
+                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue();
+            case 5:
+                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
+                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
+                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
+                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
+                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue() +
+                        " " + board.getPlayer(4).getName()+ ": " + board.getPlayer(4).getCheckpointValue();
+            case 6:
+                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
+                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
+                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
+                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
+                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue() +
+                        " " + board.getPlayer(4).getName()+ ": " + board.getPlayer(4).getCheckpointValue() +
+                        " " + board.getPlayer(5).getName()+ ": " + board.getPlayer(5).getCheckpointValue();
+        }
+        return null;
     }
 
 }
