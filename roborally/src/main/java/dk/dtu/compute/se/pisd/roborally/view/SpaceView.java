@@ -121,11 +121,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Here we design our Checkpoints. We design the colour, the shape, and assign a number
-     * so we know, what checkpoints a player is supposed to pick up first.
-     * The method can then be called in updateview() and be visible on the board
      *
-     * @param Checkpointnumber the Checkpoints that are to be collected in the game.
      *
      */
 
@@ -182,8 +178,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     /**
-     * We design our walls. We give them a heading on the board and assign a calour and a length.
-     * Then the addwall() method can be called in updateView(), which will add them to the board.
      *
      * @param heading the heading of the walls
      */
@@ -244,8 +238,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Here we design our conveyerbelt. We give our conveyerbelts a heading, a design, and a colour.
-     * Then the addConveyerbelt() method can be called in updateview() which will add our conveyerbelt to the board.
      *
      * @param heading the heading of the Conveyerbelt
      */
@@ -326,36 +318,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    /**
-     * Here we design our turnpad. we design a shape, assign a colour and add text on the turnpad to indicate what function it has
-     * Then the addTurnpad() method can be called in updateview() which will add our turnpad to the board
-     *
-     * @param d describes the type of turnpad it is, as we have 2 types.
-     */
-    public void addTurnpad(int d) {
-        /**
-         *
-         *
-         */
-        if (d == 1) {
-            Text text = createText("Left");
-            Circle circle = new Circle(12, 12, 12);
-            circle.setFill(Color.GREENYELLOW);
-            this.getChildren().addAll(circle, text);
-        }
-        if (d == 2) {
-            Text text = createText("Right");
-            Circle circle = new Circle(12, 12, 12);
-            circle.setFill(Color.GREENYELLOW);
-            this.getChildren().addAll(circle, text);
-        }
 
-    }
-
-    /**
-     * Here we design our addPit. we design a shape and assign a colour to the pit.
-     * Then the addPit() method can be called in updateview() which will add our pit to the board
-     */
     public void addPit() {
         /**
          *
@@ -367,7 +330,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     /**
-     * From: https://stackoverflow.com/questions/23258605/javafx-how-can-i-best-place-a-label-centered-in-a-shape
      * @param string
      *
      */

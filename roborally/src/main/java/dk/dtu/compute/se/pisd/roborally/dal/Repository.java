@@ -79,13 +79,7 @@ class Repository implements IRepository {
 	}
 
 	/**
-	 * @param game is the board that the game has been played on.
-	 *             we need to use that to implement the information from the board to the databaseschema.
-	 * @param k    is the board that has been chosen to play on.
-	 *             this method creates the game in the database, with the board, amount of players and the cards the players has.
-	 *             this method is only used to create the game in the database.
-	 *             It then calls "createPlayersInDB" and "createCardfieldsInDB" to create the rest of the game in the database.
-	 * @return true if the games has been created in the database
+	 *
 
 	 */
 	@Override

@@ -26,7 +26,8 @@ public class Checkpoint extends FieldAction {
         Player player = space.getPlayer();
         if (player != null && player.getCheckpointValue() + 1 == checkpointnumber) {
             player.setCheckpointValue(checkpointnumber);
-            if (checkpointnumber == 5) {
+            gameController.board.getStatusMessage();
+            if (checkpointnumber == 1) {
                 gameController.board.setPhase(Phase.GAME_ENDING);
             }
             return true;

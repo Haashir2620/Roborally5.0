@@ -3,7 +3,13 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /*
  *  This file is part of the initial project provided for the
@@ -35,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
+    
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -195,6 +202,9 @@ public class GameController {
                     //--> check checkpoints for alle spillere
                     performFieldActions();
                     step++;
+                   String status =  board.getStatusMessage();
+                    System.out.println(status);
+
 
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -350,6 +360,28 @@ public class GameController {
             }
         }
     }
+
+
+    protected void endedGame(Player player){
+        ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        ButtonType exitGame = new ButtonType("Exit Roborally", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The winner is: "+ player.getName() ,ok, exitGame);
+        alert.setTitle("Game Ended!");
+        Optional<ButtonType> re = alert.showAndWait();
+
+
+        if(re.get() != ok){
+            Platform.exit();
+        }
+        else{
+            setGameOver();
+            return;
+        }
+    }
+
+    private void setGameOver() {
+    }
+
 
     /**
      *

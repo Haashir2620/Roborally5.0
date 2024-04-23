@@ -294,7 +294,7 @@ public class Board extends Subject {
                 if (player.getCheckpointValue() == 6) {
                     board.setCurrentPlayer(player);}
             }
-            return winnermessage(board);
+            return Playerwin(board);
         }
 
         return "Phase: " + getPhase().name() +
@@ -304,7 +304,8 @@ public class Board extends Subject {
 
 
     }
-    public String winnermessage(Board board) {
+    public String Playerwin(Board board) {
+
         switch (board.getPlayersNumber()){
             case 2:
                 return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: "  +

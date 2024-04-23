@@ -49,7 +49,6 @@ AppController implements Observer {
 
     /**
      * The newGame() method lets you start a new game, where you choose the number of players that will be playing the game
-     * @author s224552
      */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
