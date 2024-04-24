@@ -131,7 +131,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             case 1 -> {
                 Text text = createText("1");
                 Circle circle = new Circle(10, 10, 10);
-                circle.setFill(Color.YELLOW);
+                circle.setFill(Color.GREENYELLOW);
                 //this.getChildren().add(circle);
                 this.getChildren().addAll(circle, text);
                 break;
@@ -139,35 +139,35 @@ public class SpaceView extends StackPane implements ViewObserver {
             case 2 -> {
                 Text text = createText("2");
                 Circle circle1 = new Circle(10, 10, 10);
-                circle1.setFill(Color.YELLOW);
+                circle1.setFill(Color.GREENYELLOW);
                 this.getChildren().addAll(circle1, text);
                 break;
             }
             case 3 -> {
                 Text text = createText("3");
                 Circle circle2 = new Circle(10, 10, 10);
-                circle2.setFill(Color.YELLOW);
+                circle2.setFill(Color.GREENYELLOW);
                 this.getChildren().addAll(circle2, text);
                 break;
             }
             case 4 -> {
                 Text text = createText("4");
                 Circle circle3 = new Circle(10, 10, 10);
-                circle3.setFill(Color.YELLOW);
+                circle3.setFill(Color.GREENYELLOW);
                 this.getChildren().addAll(circle3, text);
                 break;
             }
             case 5 -> {
                 Text text = createText("5");
                 Circle circle4 = new Circle(10, 10, 10);
-                circle4.setFill(Color.YELLOW);
+                circle4.setFill(Color.GREENYELLOW);
                 this.getChildren().addAll(circle4, text);
                 break;
             }
             case 6 -> {
                 Text text = createText("6");
                 Circle circle5 = new Circle(10, 10, 10);
-                circle5.setFill(Color.YELLOW);
+                circle5.setFill(Color.GREENYELLOW);
                 this.getChildren().addAll(circle5, text);
                 break;
             }
@@ -252,9 +252,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                         7.5, 15.0,
                         15.0, 0.0);
                 try {
-                    arrowN.setFill(Color.valueOf("CHOCOLATE"));
+                    arrowN.setFill(Color.valueOf("ORANGE"));
                 } catch (Exception e) {
-                    arrowN.setFill(Color.CHOCOLATE);
+                    arrowN.setFill(Color.ORANGE);
                 }
 
                 arrowN.setRotate(180);
@@ -270,9 +270,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                         7.5, 15.0,
                         15.0, 0.0);
                 try {
-                    arrowE.setFill(Color.valueOf("CHOCOLATE"));
+                    arrowE.setFill(Color.valueOf("ORANGE"));
                 } catch (Exception e) {
-                    arrowE.setFill(Color.CHOCOLATE);
+                    arrowE.setFill(Color.ORANGE);
                 }
 
                 arrowE.setRotate(270);
@@ -288,9 +288,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                         7.5, 15.0,
                         15.0, 0.0);
                 try {
-                    arrowS.setFill(Color.valueOf("CHOCOLATE"));
+                    arrowS.setFill(Color.valueOf("ORANGE"));
                 } catch (Exception e) {
-                    arrowS.setFill(Color.CHOCOLATE);
+                    arrowS.setFill(Color.ORANGE);
                 }
 
                 arrowS.setRotate(0);
@@ -306,9 +306,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                         7.5, 15.0,
                         15.0, 0.0);
                 try {
-                    arrowW.setFill(Color.valueOf("CHOCOLATE"));
+                    arrowW.setFill(Color.valueOf("ORANGE"));
                 } catch (Exception e) {
-                    arrowW.setFill(Color.CHOCOLATE);
+                    arrowW.setFill(Color.ORANGE);
                 }
 
                 arrowW.setRotate(90);
@@ -337,7 +337,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         Text text = new Text(string);
         text.setBoundsType(TextBoundsType.VISUAL);
         text.setStyle(
-                "-fx-font-family: \"Times New Roman\";" +
+                "-fx-font-family: \"Arial\";" +
                         "-fx-font-style: italic;" +
                         "-fx-font-size: 12px;"
         );
