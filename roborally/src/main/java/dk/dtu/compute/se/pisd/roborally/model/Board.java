@@ -291,10 +291,10 @@ public class Board extends Subject {
             int i;
             for (i = 0; i < board.getPlayersNumber(); ++i) {
                 Player player = board.getPlayer(i);
-                if (player.getCheckpointValue() == 6) {
+                if (player.getCheckpointValue() == 1) {
                     board.setCurrentPlayer(player);}
             }
-            return Playerwin(board);
+            return playerWin(board);
         }
 
         return "Phase: " + getPhase().name() +
@@ -304,41 +304,17 @@ public class Board extends Subject {
 
 
     }
-    public String Playerwin(Board board) {
+    public String playerWin(Board board) {
+        StringBuilder result = new StringBuilder("Winner is: ");
+        result.append(getCurrentPlayer().getName()).append("       Checkpoints: ");
 
-        switch (board.getPlayersNumber()){
-            case 2:
-                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: "  +
-                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
-                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue();
-            case 3:
-                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: "  +
-                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
-                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
-                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue();
-            case 4:
-                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
-                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
-                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
-                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
-                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue();
-            case 5:
-                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
-                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
-                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
-                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
-                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue() +
-                        " " + board.getPlayer(4).getName()+ ": " + board.getPlayer(4).getCheckpointValue();
-            case 6:
-                return "Winner is: " + getCurrentPlayer().getName() + "       Checkpoints: " +
-                        " " + board.getPlayer(0).getName()+ ": " + board.getPlayer(0).getCheckpointValue() +
-                        " " + board.getPlayer(1).getName()+ ": " + board.getPlayer(1).getCheckpointValue() +
-                        " " + board.getPlayer(2).getName()+ ": " + board.getPlayer(2).getCheckpointValue() +
-                        " " + board.getPlayer(3).getName()+ ": " + board.getPlayer(3).getCheckpointValue() +
-                        " " + board.getPlayer(4).getName()+ ": " + board.getPlayer(4).getCheckpointValue() +
-                        " " + board.getPlayer(5).getName()+ ": " + board.getPlayer(5).getCheckpointValue();
+        int playersNumber = board.getPlayersNumber();
+        for (int i = 0; i < playersNumber; i++) {
+            Player player = board.getPlayer(i);
+            result.append(" ").append(player.getName())
+                    .append(": ").append(player.getCheckpointValue());
         }
-        return null;
-    }
 
-}
+        return result.toString();
+    }}
+
