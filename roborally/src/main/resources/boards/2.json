@@ -1,11 +1,9 @@
 {
-  "width": 6,
-  "height": 6,
+  "width": 8,
+  "height": 8,
   "spaces": [
     {
-      "walls": [
-        "SOUTH"
-      ],
+      "walls": ["SOUTH", "EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -18,9 +16,7 @@
       "y": 0
     },
     {
-      "walls": [
-        "NORTH"
-      ],
+      "walls": ["NORTH", "WEST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -33,9 +29,7 @@
       "y": 0
     },
     {
-      "walls": [
-        "WEST"
-      ],
+      "walls": ["WEST", "EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -48,9 +42,7 @@
       "y": 1
     },
     {
-      "walls": [
-        "WEST"
-      ],
+      "walls": ["WEST", "SOUTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -63,15 +55,13 @@
       "y": 5
     },
     {
-      "walls": [
-        "EAST"
-      ],
+      "walls": ["EAST", "SOUTH"],
       "actions": [],
       "x": 3,
       "y": 2
     },
     {
-      "walls": [],
+      "walls": ["NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -84,7 +74,7 @@
       "y": 2
     },
     {
-      "walls": [],
+      "walls": ["EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -97,7 +87,7 @@
       "y": 4
     },
     {
-      "walls": [],
+      "walls": ["NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -110,7 +100,7 @@
       "y": 5
     },
     {
-      "walls": [],
+      "walls": ["SOUTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -123,7 +113,7 @@
       "y": 6
     },
     {
-      "walls": [],
+      "walls": ["EAST", "NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Checkpoint",
@@ -136,7 +126,7 @@
       "y": 0
     },
     {
-      "walls": [],
+      "walls": ["NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -149,7 +139,7 @@
       "y": 2
     },
     {
-      "walls": [],
+      "walls": ["WEST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -162,7 +152,7 @@
       "y": 3
     },
     {
-      "walls": [],
+      "walls": ["SOUTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -175,7 +165,7 @@
       "y": 4
     },
     {
-      "walls": [],
+      "walls": ["EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -188,22 +178,7 @@
       "y": 5
     },
     {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 6
-    },
-    {
-      "walls": [
-        "NORTH"
-      ],
+      "walls": ["NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -216,9 +191,7 @@
       "y": 2
     },
     {
-      "walls": [
-        "EAST"
-      ],
+      "walls": ["EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -231,9 +204,7 @@
       "y": 3
     },
     {
-      "walls": [
-        "SOUTH"
-      ],
+      "walls": ["SOUTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -246,9 +217,7 @@
       "y": 4
     },
     {
-      "walls": [
-        "WEST"
-      ],
+      "walls": ["WEST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -261,9 +230,7 @@
       "y": 5
     },
     {
-      "walls": [
-        "NORTH"
-      ],
+      "walls": ["NORTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -276,9 +243,7 @@
       "y": 6
     },
     {
-      "walls": [
-        "EAST"
-      ],
+      "walls": ["EAST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
@@ -291,7 +256,7 @@
       "y": 7
     },
     {
-      "walls": [],
+      "walls": ["SOUTH"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
@@ -302,9 +267,8 @@
       "y": 7
     },
     {
-      "walls": [],
-      "actions": [
-      ],
+      "walls": ["WEST"],
+      "actions": [],
       "x": 7,
       "y": 4
     }
