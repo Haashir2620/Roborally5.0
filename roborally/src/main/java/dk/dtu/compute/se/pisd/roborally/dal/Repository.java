@@ -318,6 +318,70 @@ class Repository implements IRepository {
 	 *                      creates the cards for each player in the database. That means, both the cards on the hand and the programming cards.
 	 *                      but in the start there is no programming cards, so that doesn't really do that much form the start.
 	 */
+
+	/**
+	 * @param game is the board that is used for the game with all the information on the players and so on.
+	 * @throws SQLException if something doesn't work.
+	 *                      this method is used to load all the players on the game that the players chose to use again.
+	 *                      this method is never used bu itself, but is only used in the "LoadGameFromDB".
+	 */
+	private void loadPlayersFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectPlayersASCStatement();
+		ps.setInt(1, game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		int i = 0;
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			if (i++ == playerId) {
+				String name = rs.getString(PLAYER_NAME);
+				String colour = rs.getString(PLAYER_COLOUR);
+				Player player = new Player(game, colour, name);
+				game.addPlayer(player);
+
+				int x = rs.getInt(PLAYER_POSITION_X);
+				int y = rs.getInt(PLAYER_POSITION_Y);
+				player.setSpace(game.getSpace(x, y));
+				int heading = rs.getInt(PLAYER_HEADING);
+				player.setHeading(Heading.values()[heading]);
+				int chekpointvaule = rs.getInt(PLAYER_CHECKPOINTVALU);
+				player.setCheckpointValue(chekpointvaule);
+				int hp = rs.getInt(PLAYER_HP);
+				player.setHp(hp);
+			} else {
+				System.err.println("Game in DB does not have a player with id " + i + "!");
+			}
+		}
+		rs.close();
+	}
+
+
+	/**
+	 * @param game is the board that is used for the game with all the information on the players and so on.
+	 * @throws SQLException if something doesn't work.
+	 *                      Updates the players in the database.
+	 *                      It is used for everytime the player press save game. then it updates the players.
+	 */
+	private void updatePlayersInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectPlayersStatementU();
+		ps.setInt(1, game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			Player player = game.getPlayer(playerId);
+			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
+			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
+			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKPOINTVALU, player.getCheckpointValue());
+			rs.updateInt(PLAYER_HP, player.getHp());
+			rs.updateRow();
+		}
+		rs.close();
+	}
+
+	//-----------------------------------------------------------------------------------------------------------------
+
 	private void createCardFieldsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatementU();
 		ps.setInt(1, game.getGameId());
@@ -366,48 +430,8 @@ class Repository implements IRepository {
 			}
 		}
 	}
+//---------------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      this method is used to load all the players on the game that the players chose to use again.
-	 *                      this method is never used bu itself, but is only used in the "LoadGameFromDB".
-	 */
-	private void loadPlayersFromDB(Board game) throws SQLException {
-		PreparedStatement ps = getSelectPlayersASCStatement();
-		ps.setInt(1, game.getGameId());
-
-		ResultSet rs = ps.executeQuery();
-		int i = 0;
-		while (rs.next()) {
-			int playerId = rs.getInt(PLAYER_PLAYERID);
-			if (i++ == playerId) {
-				String name = rs.getString(PLAYER_NAME);
-				String colour = rs.getString(PLAYER_COLOUR);
-				Player player = new Player(game, colour, name);
-				game.addPlayer(player);
-
-				int x = rs.getInt(PLAYER_POSITION_X);
-				int y = rs.getInt(PLAYER_POSITION_Y);
-				player.setSpace(game.getSpace(x, y));
-				int heading = rs.getInt(PLAYER_HEADING);
-				player.setHeading(Heading.values()[heading]);
-				int chekpointvaule = rs.getInt(PLAYER_CHECKPOINTVALU);
-				player.setCheckpointValue(chekpointvaule);
-				int hp = rs.getInt(PLAYER_HP);
-				player.setHp(hp);
-			} else {
-				System.err.println("Game in DB does not have a player with id " + i + "!");
-			}
-		}
-		rs.close();
-	}
-
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      loads the cardfields from every player that is in the game the players has chosen to use again.
-	 */
 	private void loadCardFieldsFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatement();
 		ps.setInt(1, game.getGameId());
@@ -437,36 +461,8 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      Updates the players in the database.
-	 *                      It is used for everytime the player press save game. then it updates the players.
-	 */
-	private void updatePlayersInDB(Board game) throws SQLException {
-		PreparedStatement ps = getSelectPlayersStatementU();
-		ps.setInt(1, game.getGameId());
+	//------------------------------------------------------------------------------------------------------------------
 
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			int playerId = rs.getInt(PLAYER_PLAYERID);
-			Player player = game.getPlayer(playerId);
-			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
-			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
-			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-			rs.updateInt(PLAYER_CHECKPOINTVALU, player.getCheckpointValue());
-			rs.updateInt(PLAYER_HP, player.getHp());
-			rs.updateRow();
-		}
-		rs.close();
-	}
-
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      Updates the cardfields in the database for every player in the game that the player has chosen to use.
-	 *                      This method is only used when the player presses save game.
-	 */
 	private void updateCardFieldsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatementU();
 		ps.setInt(1, game.getGameId());
@@ -496,6 +492,9 @@ class Repository implements IRepository {
 		}
 		rs.close();
 	}
+
+	//------------------------------------------------------------------------------------------------------------------
+
 
 	private static final String SQL_INSERT_GAME =
 			"INSERT INTO Game(name, currentPlayer, phase, step, boardname) VALUES (?, ?, ?, ?, ?)";
