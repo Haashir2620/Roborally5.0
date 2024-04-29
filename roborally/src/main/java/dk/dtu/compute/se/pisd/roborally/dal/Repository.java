@@ -78,10 +78,7 @@ class Repository implements IRepository {
 		this.connector = connector;
 	}
 
-	/**
-	 *
 
-	 */
 	@Override
 	public boolean createGameInDB(Board game, int k) {
 
@@ -93,8 +90,8 @@ class Repository implements IRepository {
 
 				PreparedStatement ps = getInsertGameStatementRGK();
 
-				ps.setString(1, "Date: " + new Date()); // instead of name
-				ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
+				ps.setString(1, "Date: " + new Date());
+				ps.setNull(2, Types.TINYINT);
 				ps.setInt(3, game.getPhase().ordinal());
 				ps.setInt(4, game.getStep());
 				ps.setInt(5, k);
@@ -121,11 +118,7 @@ class Repository implements IRepository {
 				//TOODO this method needs to be implemented first
 				//System.out.println("hej med dig");
 				createCardFieldsInDB(game);
-				//System.out.println("hej med mig");
-				// since current player is a foreign key, it can oly be
-				// inserted after the players are created, since MySQL does
-				// not have a per transaction validation, but validates on
-				// a per row basis.
+
 				ps = getSelectGameStatementU();
 				ps.setInt(1, game.getGameId());
 
