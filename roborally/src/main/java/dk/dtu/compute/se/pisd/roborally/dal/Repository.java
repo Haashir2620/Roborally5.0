@@ -282,13 +282,7 @@ class Repository implements IRepository {
 		return result;
 	}
 
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      creates the players in the database with the information from the board.
-	 *                      So it makes a for loop for all the players. it adds the playerid, playercolour, player position, playerheading,
-	 *                      playercheckpointvalue and playerhp. playerhp is how much life a player has.
-	 */
+
 	private void createPlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
@@ -313,17 +307,7 @@ class Repository implements IRepository {
 	}
 
 	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      creates the cards for each player in the database. That means, both the cards on the hand and the programming cards.
-	 *                      but in the start there is no programming cards, so that doesn't really do that much form the start.
-	 */
-
-	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      this method is used to load all the players on the game that the players chose to use again.
-	 *                      this method is never used bu itself, but is only used in the "LoadGameFromDB".
+	 *
 	 */
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
@@ -357,10 +341,7 @@ class Repository implements IRepository {
 
 
 	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 * @throws SQLException if something doesn't work.
-	 *                      Updates the players in the database.
-	 *                      It is used for everytime the player press save game. then it updates the players.
+	 *
 	 */
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
