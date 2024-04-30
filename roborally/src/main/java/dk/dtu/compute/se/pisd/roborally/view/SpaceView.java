@@ -109,6 +109,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                     addPit();
                 }
 
+
             }
 
             for (Heading heading : space.getWalls()) {

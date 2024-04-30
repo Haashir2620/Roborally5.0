@@ -287,7 +287,6 @@ public class Board extends Subject {
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         if (board.getPhase() == Phase.GAME_ENDING) {
-
             int i;
             for (i = 0; i < board.getPlayersNumber(); ++i) {
                 Player player = board.getPlayer(i);

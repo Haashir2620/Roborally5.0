@@ -108,11 +108,7 @@ public class PlayerView extends Tab implements ViewObserver {
         }
     }
 
-    /**
-     * updates the view for the player.
-     * @param subject
-     * @author s224552
-     */
+
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {
@@ -180,12 +176,7 @@ public class PlayerView extends Tab implements ViewObserver {
                 playerInteractionPanel.getChildren().clear();
 
                 if (player.board.getCurrentPlayer() == player) {
-                    /**
-                     * In this part of the code it takes the 2 options and shows Buttons, with the options.
-                     * It then takes the Button that is presst and gives that option to the gameController in the
-                     * executeCommandOptionAndContinue(option).
-                     * @author s224552
-                     */
+
 
                     CommandCardField CurrentField = player.getProgramField((player.board.getStep()));
                     CommandCard CurrentCard = CurrentField.getCard();

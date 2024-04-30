@@ -184,7 +184,9 @@ public class GameController {
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
 
             int step = board.getStep();
+
             if (step >= 0 && step < Player.NO_REGISTERS) {
+
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
@@ -201,8 +203,10 @@ public class GameController {
                     //--> execute actions on fields!
                     //--> check checkpoints for alle spillere
                     performFieldActions();
+                    String status =  board.getStatusMessage();
+
+                    System.out.println(status);
                     step++;
-                   String status =  board.getStatusMessage();
                     System.out.println(status);
 
 
