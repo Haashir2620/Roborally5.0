@@ -340,6 +340,7 @@ public class GameController {
                 try {
                     moveToSpace(player, target, heading);
                     player.setSpace(target);
+                    player.setHeading(Heading.EAST);
                 } catch (ImpossibleMoveException e) {
                 }
             }
