@@ -58,27 +58,27 @@ public class GameController {
     public void moveCurrentPlayerToSpace(@NotNull Space space) {
         if (space.getPlayer() == null) {
             Player currentPlayer = board.getCurrentPlayer();
-            space.setPlayer(currentPlayer);
-            board.setMoveCounter(board.getMoveCounter() + 1);
-            board.getStatusMessage();
-            /**
-             * Ovenfor har brugt metoden setMoveCounter til at sætte den nuværende moveCounter til +1
-             * Og derefter hentet den opdaterede statuslinje med getStatusMessage()
-             */
-            if (board.getPlayerNumber(currentPlayer) == board.getPlayersNumber() - 1) {
+            space.setPlayer(currentPlayer); // Tildeler currentPlayer til dette space
+            board.setMoveCounter(board.getMoveCounter() + 1); // Opdaterer moveCounter med én
+            board.getStatusMessage(); // Henter den opdaterede statusbesked, men bruger den ikke
+
+            // Beregner indeks for den næste spiller og opdaterer currentPlayer
+            int currentPlayerIndex = board.getPlayerNumber(currentPlayer);
+            int totalPlayers = board.getPlayersNumber();
+            if (currentPlayerIndex == totalPlayers - 1) {
+                // Hvis nuværende spiller er den sidste, cykler tilbage til den første spiller
                 currentPlayer = board.getPlayer(0);
-                board.setCurrentPlayer(currentPlayer);
             } else {
-                Player nextCurrentPlayer = currentPlayer;
-                currentPlayer = board.getPlayer(board.getPlayerNumber(nextCurrentPlayer) + 1);
-                board.setCurrentPlayer(currentPlayer);
+                // Ellers, gå til den næste spiller
+                currentPlayer = board.getPlayer(currentPlayerIndex + 1);
             }
+            board.setCurrentPlayer(currentPlayer);
         }
     }
 
-    /**
-     *starts the programmingphase
-     */
+        /**
+         *starts the programmingphase
+         */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -470,21 +470,21 @@ public class GameController {
      *
      */
 
-    public void moveToSpace(
-            @NotNull Player player,
-            @NotNull Space space,
-            @NotNull Heading heading) throws ImpossibleMoveException {
+    void moveToSpace(@NotNull Player player, @NotNull Space space, @NotNull Heading heading) throws ImpossibleMoveException {
+        assert board.getNeighbour(player.getSpace(), heading) == space; // make sure the move to here is possible in principle
         Player other = space.getPlayer();
-        if (other != null) {
+        if (other != null){
             Space target = board.getNeighbour(space, heading);
             if (target != null) {
                 moveToSpace(other, target, heading);
+                assert target.getPlayer() == null : target; // make sure target is free now
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
         player.setSpace(space);
     }
+
 
 
 }
