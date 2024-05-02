@@ -1,17 +1,17 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CheckpointTest {
-
+class PitTest {
 
     private GameController gameController;
 
@@ -29,37 +29,20 @@ public class CheckpointTest {
 
     }
 
-
     @AfterEach
     void tearDown() {
         gameController = null;
     }
 
-
     @Test
-    void updateCheckpoint() {
+    void PitAction() {
         Board board = gameController.board;
         Player player1 = board.getCurrentPlayer();
-        player1.setCheckpointValue(4);
-        player1.setSpace(board.getSpace(0,2));
-        int CheckpointValue = player1.getCheckpointValue();
+        //We know that there is a Pit on space x = 4 y = 7
+        player1.setSpace(board.getSpace(4, 7));
+        int hp = player1.getHp();
         gameController.performFieldActions();
-        Assertions.assertEquals(CheckpointValue + 1, player1.getCheckpointValue());
-
-
-    }
-
-    @Test
-    void checkpointChecker() {
-        Board board = gameController.board;
-        Player player1 = board.getCurrentPlayer();
-        player1.setCheckpointValue(4);
-        int NewCheckpointValue = player1.getCheckpointValue();
-        player1.setSpace(board.getSpace(4,0));
-        gameController.performFieldActions();
-        Assertions.assertEquals(player1.getCheckpointValue(), NewCheckpointValue + 1, "Player have skipped a checkpoint");
-
-
+        Assertions.assertEquals(player1.getHp(), hp - 1, "the old hp - 1 ");
 
     }
 }
