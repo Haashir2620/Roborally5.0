@@ -55,7 +55,7 @@ public class CheckpointTest {
         Player player1 = board.getCurrentPlayer();
         player1.setCheckpointValue(4);
         int NewCheckpointValue = player1.getCheckpointValue();
-        player1.setSpace(board.getSpace(4,0));
+        player1.setSpace(board.getSpace(0,2));
         gameController.performFieldActions();
         Assertions.assertEquals(player1.getCheckpointValue(), NewCheckpointValue + 1, "Player have skipped a checkpoint");
 
