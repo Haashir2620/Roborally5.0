@@ -92,39 +92,34 @@ public class SpaceView extends StackPane implements ViewObserver {
      */
     @Override
     public void updateView(Subject subject) {
-        if (subject != this.space) {
-            return; // Returnerer tidligt, hvis subject ikke er space
+        if (subject == this.space) {
+            updatePlayer();
+            for (FieldAction action : space.getActions()) {
+                if (action instanceof ConveyorBelt) {
+                    ConveyorBelt conveyorBelt = (ConveyorBelt) action;
+                    addConveyerbelt(conveyorBelt.getHeading());
+                }
+                if (action instanceof Checkpoint) {
+                    Checkpoint checkpoint = (Checkpoint) action;
+
+                    addCheckpoints(checkpoint.getCheckpointnumber());
+                }
+
+                if (action instanceof Pit) {
+                    addPit();
+                }
+
+
+            }
+
+            for (Heading heading : space.getWalls()) {
+                addwall(heading);
+            }
+
+
         }
 
-        updatePlayer();
-
-        for (FieldAction action : space.getActions()) {
-            processAction(action);
-        }
-
-        for (Heading heading : space.getWalls()) {
-            addwall(heading);
-        }
     }
-
-    private void processAction(FieldAction action) {
-        if (action instanceof ConveyorBelt) {
-            ConveyorBelt conveyorBelt = (ConveyorBelt) action;
-            addConveyerbelt(conveyorBelt.getHeading());
-            return;
-        }
-
-        if (action instanceof Checkpoint) {
-            Checkpoint checkpoint = (Checkpoint) action;
-            addCheckpoints(checkpoint.getCheckpointnumber());
-            return;
-        }
-
-        if (action instanceof Pit) {
-            addPit();
-        }
-    }
-
     /**
      *
      *
