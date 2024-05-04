@@ -339,7 +339,6 @@ public class GameController {
                 try {
                     moveToSpace(player, target, heading);
                     player.setSpace(target);
-                    player.setHeading(Heading.EAST);
                 } catch (ImpossibleMoveException e) {
                 }
             }
@@ -446,10 +445,10 @@ public class GameController {
     }
 
     /**
-     * this method  moves the card from one place to another.
-     * @param source is the commanrdfard that you want to move
+     * this method  moves the card from one field to another
+     * @param source is the commandCard that you want to move
      * @param target is where you want to set the card
-     * @return return true if it workedbbb
+     * @return return true if it workedd
      */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
@@ -467,28 +466,24 @@ public class GameController {
      * @param player
      * @param space
      * @param heading
+     @throws ImpossibleMoveException
      * Attempts to move a player to a specified space in a given direction. If the space is occupied by another player,
      * it recursively tries to move the obstructing player to the next space in the same direction. If no space is available,
      * it throws an ImpossibleMoveException. This method ensures that the movement adheres to the game rules and space availability.
-     * @autho Amaan Ahmed, Mohamamd Haashir Khan
+     * @autho Amaan Ahmed, Mohammad Haashir Khan
      */
 
-
-    public void moveToSpace(
-            @NotNull Player player,
-            @NotNull Space space,
-            @NotNull Heading heading) throws ImpossibleMoveException {
+    void moveToSpace(@NotNull Player player, @NotNull Space space, @NotNull Heading heading) throws ImpossibleMoveException {
+        assert board.getNeighbour(player.getSpace(), heading) == space; // make sure the move to here is possible in principle
         Player other = space.getPlayer();
-        if (other != null) {
+        if (other != null){
             Space target = board.getNeighbour(space, heading);
             if (target != null) {
                 moveToSpace(other, target, heading);
+                assert target.getPlayer() == null : target; // make sure target is free now
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
         player.setSpace(space);
-    }
-
-
-}
+    }}
