@@ -48,7 +48,7 @@ AppController implements Observer {
     }
 
     /**
-     * The newGame() method lets you start a new game, where you choose the number of players that will be playing the game
+     * The newGame() method purpose is to start a new game, and you can choose the number of playerd
      */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
@@ -58,13 +58,18 @@ AppController implements Observer {
 
 
         /**
-         * This allows players to choose from board options that are defined in an array list
-         * as a parameter in the AppController.
-         * It then takes the answer and defines it as result1,
-         * which is then used to select the correct board from the board folder that contains the JSON files.
-         *
+         /**
+         * Initiates the process to start a new game, allowing users to select the number of players and the game board.
+         * If an existing game is in progress, it offers the option to save or abort the current game.
+         * A new game environment is set up with the specified board and players, and the game state is saved to the database.
+         * Finally, the game view is updated to reflect the new game setup.
          * @author
+         *
+         * @param result The optional integer from the player number choice dialog.
+         * @param result1 The optional integer from the board selection choice dialog.
          */
+
+
 
         ChoiceDialog<Integer> dialog1 = new ChoiceDialog<>(BOARD_OPTIONS.get(0), BOARD_OPTIONS);
         dialog1.setTitle("Board number");
@@ -105,7 +110,8 @@ AppController implements Observer {
     }
 
     /**
-     * saveGame() saves a game id in the database.
+     * saveGame() method is used to save the game in the database, and using updateGameinDB()
+     * to update the game in the database
      */
     public void saveGame() {
         repository.updateGameInDB(gameController.board);
@@ -113,11 +119,13 @@ AppController implements Observer {
 
 
     /**
-     * After having saved a game in the database, a player can now choose to load a chosen game
-     * After choosing the saved game to load from the database, it will load the saved  board, the players,
-     * and the cards.
-     *
-     */
+     * /**
+     *  * Loads a game from the database based on user selection. The method retrieves a list of saved games,
+     *  * displays them in a reversed order for user selection, and loads the selected game. It sets up the game
+     *  * environment by initializing a new GameController with the loaded board, reassigns the players to their
+     *  * saved positions, and updates the game view to reflect the current game state.
+     *  */
+
     public void loadGame() {
         List<GameInDB> list = repository.getGames();
         Collections.reverse(list);
@@ -137,16 +145,14 @@ AppController implements Observer {
             roboRally.createBoardView(gameController);
         }
     }
-
     /**
-     * Stop playing the current game, giving the user the option to save
-     * the game or to cancel stopping the game. The method returns true
-     * if the game was successfully stopped (with or without saving the
-     * game); returns false, if the current game was not stopped. In case
-     * there is no current game, false is returned.
+     * Attempts to stop the current game. If a game is active, it saves the game automatically,
+     * clears the current game controller, updates the view to reflect no active game, and returns true.
+     * If no game is active, it returns false, indicating that there was no game to stop.
      *
-     * @return true if the current game was stopped, false otherwise
+     * @return true if a game was active and has been stopped, false otherwise.
      */
+
     public boolean stopGame() {
         if (gameController != null) {
 
@@ -161,7 +167,7 @@ AppController implements Observer {
     }
 
     /**
-     * Basically when you try to quit roborally it will bring up the buttons that will let you exit roborally
+     * Exits the Roborally application. If a game is active, it prompts the user to confirm the exit action
      */
     public void exit() {
         if (gameController != null) {
@@ -174,9 +180,7 @@ AppController implements Observer {
                 return; // return without exiting the application
             }
         }
-
-        // If the user did not cancel, the RoboRally application will exit
-        // after the option to save the game
+        // if there is no game or the user confirmed the exit, we exit the application
         if (gameController == null || stopGame()) {
             Platform.exit();
         }

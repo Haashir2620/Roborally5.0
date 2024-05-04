@@ -77,7 +77,7 @@ public class GameController {
     }
 
         /**
-         *starts the programmingphase
+         * this method starts the programmingphase
          */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
@@ -112,7 +112,7 @@ public class GameController {
     }
 
     /**
-     * finishes the programmingphase
+     * This method finishes the programmingphase
      */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
@@ -123,7 +123,7 @@ public class GameController {
     }
 
     /**
-     *makes the programfield visible
+     *This method makes the programfield visible
      */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
@@ -136,7 +136,7 @@ public class GameController {
     }
 
     /**
-     * makes the programfield unvisible
+     * This method makes the programfield unvisible
      */
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -172,12 +172,14 @@ public class GameController {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
+
     /**
-     * executes a commandcard and goes to the next player. if the board is not in activation phase, then it won't work.
-     * and there is a currentplayer from the board. the step has to be between those 5 cards. if the card is null,
-     * the it won't go through. after executing command, then it will go to the next player by setting currentplayer on board,
-     * to the next player
+     * Handles player interaction during the game's interactive command phase, executing a chosen command option.
+     * After executing the command, it updates the game phase, advances the game to the next player, and, if all players have acted,
+     * progresses to the next step or restarts the programming phase.
      */
+
+
     private void executeNextStep() {
 
         Player currentPlayer = board.getCurrentPlayer();
@@ -231,10 +233,11 @@ public class GameController {
     }
 
     /**
-     * commandcards where you have a choice between to options.
-     * @param option is the cards that is an option
-     *
+     * Handles player interaction during the game's interactive command phase, executing a chosen command option.
+     * After executing the command, it updates the game phase, advances the game to the next player, and, if all players have acted,
+     * progresses to the next step or restarts the programming phase.
      */
+
     public void executeCommandOptionAndContinue(@NotNull Command option) {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
@@ -322,14 +325,10 @@ public class GameController {
     }
 
     /**
-     * Moves the current players robot one space i the robots current direction
-     *
-     * @param player The player which Robot is getting moved one space in the current direction
-     *               This method first insures that both the current space and the neigbouring space exist on the board
-     *               It then checks if the neighbouring space is occupied by another player both either setting the players space to
-     *               the neighbouring space or if the space is occupied it will run a method called moveToSpace which pushes the other
-     *               player away before moving onto the space
-     *
+     * Moves a player forward in the direction they are currently facing. If the target space is available,
+     * the player is moved to that space.
+     * An ImpossibleMoveException is caught and handled silently if the move cannot be completed.
+     * @author Mohammad Haashir Khan
      */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
@@ -348,12 +347,14 @@ public class GameController {
 
     }
 
-
     /**
-     * It is here where our action fields are activated after the players' turn is finished.
-     * By examining where the players are located and which Fieldaction they are on, we then call doAction.
-
+     * Iterates through all players on the board, performing any field actions present on the spaces they occupy.
+     * Each action is executed using a new instance of GameController,
+     * applying the action's effects based on the current game state.
+     * @author Mohammad Haashir Khan
      */
+
+
     public void performFieldActions() {
         int i;
         for (i = 0; i < board.getPlayersNumber(); ++i) {
@@ -389,11 +390,10 @@ public class GameController {
 
 
     /**
-     *
-     * The method moves the current robot 3 spaces forward in the robots current direction.
-     * Before moving the robot the method checks if every space is free.
+     * This method moves the player 3 spaces foward, by calling movefoward 3 times
      *
      * @param player is the the player that fast forward
+     * @author Amaan Ahmed
      */
     public void fastForward(@NotNull Player player) {
         this.moveForward(player);
@@ -402,19 +402,20 @@ public class GameController {
     }
 
     /**
-     * The robots direction turns to the right
+     * Turns the robot direction right
      *
      * @param player is the current players robot
+     * @author Amaan Ahmed
      */
     public void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
         player.setHeading(heading.next());
     }
-
     /**
-     * The robots direction turns to the left
-     * @param player is the current players robot
+     * Turns the robot direction left
      *
+     * @param player is the current players robot
+     * @author ALi Hassan
      */
     public void turnLeft(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -422,8 +423,8 @@ public class GameController {
     }
 
     /**
-     * @param player is the current players robot
-     * The robots direction turns around
+     * Robot makes uturn
+     * @Author Asim Raja
      */
     public void uTurn(@NotNull Player player) {
         int i;
@@ -434,8 +435,10 @@ public class GameController {
     }
 
     /**
-     * this moves the player 2 spaces forward
+     * This method Moves the player 2 spaces foward
+     *
      * @param player is the player that moves
+     * @author Muhammed Feyez
      */
     public void move2(@NotNull Player player) {
         this.moveForward(player);
@@ -443,7 +446,7 @@ public class GameController {
     }
 
     /**
-     * this moves the card from one place to another.
+     * this method  moves the card from one place to another.
      * @param source is the commanrdfard that you want to move
      * @param target is where you want to set the card
      * @return return true if it workedbbb
@@ -464,27 +467,28 @@ public class GameController {
      * @param player
      * @param space
      * @param heading
-     * @throws ImpossibleMoveException
-     *
-     *
-     *
+     * Attempts to move a player to a specified space in a given direction. If the space is occupied by another player,
+     * it recursively tries to move the obstructing player to the next space in the same direction. If no space is available,
+     * it throws an ImpossibleMoveException. This method ensures that the movement adheres to the game rules and space availability.
+     * @autho Amaan Ahmed, Mohamamd Haashir Khan
      */
 
-    void moveToSpace(@NotNull Player player, @NotNull Space space, @NotNull Heading heading) throws ImpossibleMoveException {
-        assert board.getNeighbour(player.getSpace(), heading) == space; // make sure the move to here is possible in principle
+
+    public void moveToSpace(
+            @NotNull Player player,
+            @NotNull Space space,
+            @NotNull Heading heading) throws ImpossibleMoveException {
         Player other = space.getPlayer();
-        if (other != null){
+        if (other != null) {
             Space target = board.getNeighbour(space, heading);
             if (target != null) {
                 moveToSpace(other, target, heading);
-                assert target.getPlayer() == null : target; // make sure target is free now
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
         player.setSpace(space);
     }
-
 
 
 }

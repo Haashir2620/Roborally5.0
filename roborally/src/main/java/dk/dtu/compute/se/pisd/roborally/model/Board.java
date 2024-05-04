@@ -33,6 +33,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mohammad Haashir Khan, Amaan Ahmed, Ali Hassan, Muhammed Feyez, Asim raja
  *
  */
 public class Board extends Subject {
@@ -60,11 +61,11 @@ public class Board extends Subject {
     private int moveCounter = 0;
 
     /**
-     * Vi opretter en privat variabel som er vores counter
-     * Vi sætter den til 0
-     * Vi opretter en getter og en setter for variablen
-     * Setteren bruger notifyChange() til at orientere tilobserver at der er sket en ændring i programmet
+     * A private variable acts as our counter, initialized to zero.
+     * Getter and setter methods are provided for this variable.
+     * The setter employs notifyChange() to inform observers about modifications in the program state.
      */
+
     public int getMoveCounter() {
         return moveCounter;
     }
@@ -229,20 +230,15 @@ public class Board extends Subject {
      */
 
 
-    // Sæt væg tjek ind her.
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
         /**
-         *
-         * This Method returns the neighbouring space
-         * It takes the current space of the player and a heading as Parameters
-         * It then uses they these to determind the neighbouring space in a given direction.
-         * In adition it checks for walls that are between the space and its neighbour.
-         * heading1 checks for a wall on the players space that is facing the same way as the player
-         * heading2 checks for an opposite facing wall on the neighbouring.
-         * It does this by checking the if a List of wall the wall headings on the players currentfield contains a heading matching the players
-         * And if the opposite field has a wall heading facing the opposite way.
-         *
+         * Retrieves the neighboring space in the specified direction from the given space.
+         * It calculates the coordinates based on the heading and checks for any walls
+         * blocking the movement between the current and neighboring space.
+         * Walls are checked in the current space (heading1) and the opposite wall in the neighboring space (heading2).
+         * If walls block the path, null is returned, indicating no accessible neighbor in that direction.
          */
+
         int x = space.x;
         int y = space.y;
 
@@ -274,10 +270,13 @@ public class Board extends Subject {
     }
 
     /**
-     * Her har vi tilføjet antal slag til statuslinjen
-     * Vi bruger getMoveCounter() til at vise hvor mange slag der er sket i spillet
-     * Vi har også tilføjet et CheckpointValue til den så man kan se hvor mange chekpoints hver spiller har.
+     * Provides a string representation of the current game status, including the game phase, active player,
+     * move count, checkpoint values, and health points of the current player.
+     * If the game is in the ending phase, it identifies the winning player based on checkpoint completion.
+     *
+     * @author Mohamamd Haashir Khan, Amaan Ahmed
      */
+
     public String getStatusMessage() {
         Board board = currentPlayer.board;
         // this is actually a view aspect, but for making assignment V1 easy for
@@ -303,6 +302,13 @@ public class Board extends Subject {
 
 
     }
+    /**
+     * Constructs and returns a string that announces the winner of the game and lists all players along with their checkpoint values.
+     * The method starts by declaring the current player as the winner and then iterates through all players to append their names and checkpoint scores to the result.
+     * This method is typically called when the game enters the ending phase and needs to display the outcome.
+     * @author Mohammad Haashir Khan
+     */
+
     public String playerWin(Board board) {
         StringBuilder result = new StringBuilder("Winner is: ");
         result.append(getCurrentPlayer().getName()).append("       Checkpoints: ");
@@ -315,5 +321,6 @@ public class Board extends Subject {
         }
 
         return result.toString();
-    }}
+    }
+}
 

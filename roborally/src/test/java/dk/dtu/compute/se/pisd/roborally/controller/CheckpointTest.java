@@ -10,6 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This test clas is created to test Checkpoints, which is done in the doActions method
+ * @author Amaan Ahmed
+ */
+
 public class CheckpointTest {
 
 

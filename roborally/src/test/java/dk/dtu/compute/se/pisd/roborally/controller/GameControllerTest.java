@@ -9,6 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * This test clas is created to test different method such as the cards direction and the movement of the player
+ * @author Amaan Ahmed
+ */
 
 class GameControllerTest {
 

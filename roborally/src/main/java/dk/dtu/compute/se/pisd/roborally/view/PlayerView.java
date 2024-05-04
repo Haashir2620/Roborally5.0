@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * this is what the player can see.
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mohammad Haashir khan
  */
 public class PlayerView extends Tab implements ViewObserver {
 
@@ -108,7 +109,11 @@ public class PlayerView extends Tab implements ViewObserver {
         }
     }
 
-
+    /**
+     * This method is used for updating thr view of the player
+     * @param subject
+     * @author Mohammad Haashir Khan
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {

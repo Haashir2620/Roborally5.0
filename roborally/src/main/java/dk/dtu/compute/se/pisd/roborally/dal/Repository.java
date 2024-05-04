@@ -33,6 +33,7 @@ import java.util.List;
  * the reporsitory to change the database
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mohammad Haashir Khan, Amaan Ahmad
  */
 class Repository implements IRepository {
 

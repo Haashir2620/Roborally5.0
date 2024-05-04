@@ -27,18 +27,17 @@ import org.jetbrains.annotations.NotNull;
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
- * this class is the player class. it has everything there is to know about a player.
- * The board it is on, the name, the color, checkpointvalue, hp, the space it is on, checpointcomplete, commandcardfield,
- * and cards.
+ * This class represents the players in the game, such as number, name, color, space etc...
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mohammad Haashir Khan, Amaan Ahmed, Ali Hassan, Muhammed Feyez, Asim raja
  */
 
 /**
- * added the checkpoint
+ * add checkpoint
  */
 
 /**
- * added hp
+ * add hp
  */
 public class Player extends Subject {
 
@@ -120,7 +119,7 @@ public class Player extends Subject {
     }
 
     /**
-     * Gets current space of Robot
+     * Gets current space of Player/Robot
      *
      * @return current space of Robot
      */
@@ -129,7 +128,7 @@ public class Player extends Subject {
     }
 
     /**
-     * sets the current players robot in the space that taken in the parameter
+     * This set method sets the space of the robot to the space given as parameter.
      *
      * @param space the space you want to move the robot to.
      */
@@ -149,7 +148,7 @@ public class Player extends Subject {
     }
 
     /**
-     * Returns the current direction of the robot
+     * This method returns the current direction of the robot
      *
      * @return the current direction of the robot
      */

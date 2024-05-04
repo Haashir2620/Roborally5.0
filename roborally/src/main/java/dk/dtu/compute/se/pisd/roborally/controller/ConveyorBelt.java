@@ -28,13 +28,14 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * this a class that has the conveyorbelt action on it. it needs a heading and a space to tell where the conveyorbelt is.
- * there is a getter and a setter for both heading and space, so you can change and see where the conveyorbelt is.
- * conveyorbelt starts with a heading and space is set to null.
- * do action is the one that gamecontroller calss everytime someone moves. if the action on the space is a conveyorbelt.
- * then it goes in to the doaction in this class and moves the player.
- * @author Ekkart Kindler, ekki@dtu.dk
+ * Represents a conveyor belt on the game board that moves a player to an adjacent space in the player's current heading.
+ * This action is executed if there is a player on the conveyor belt and the next space in the direction the belt moves is empty.
+ *
+ * @return true if the player is successfully moved to the next space,
+ * false otherwise (e.g., if the space is occupied or non-existent).
+ * @Author Amaan Ahmad
  */
+
 public class ConveyorBelt extends FieldAction {
 
     private Heading heading;

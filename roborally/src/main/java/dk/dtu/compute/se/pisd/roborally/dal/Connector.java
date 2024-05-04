@@ -51,7 +51,7 @@ class Connector {
 	private Connection connection;
 
 	/**
-	 * connects to the database with, the host, the port and the database. then it log ins with username and password.
+	 * connect with the database, and use the usernam and password to log in
 	 */
 	Connector() {
 		try {
