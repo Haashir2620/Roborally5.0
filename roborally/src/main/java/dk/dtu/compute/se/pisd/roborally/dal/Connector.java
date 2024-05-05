@@ -70,6 +70,8 @@ class Connector {
 
 	/**
 	 * creates the databaseschema in mysql.
+	 *
+	 * @author Mohammmad Haashir khan, Amaan Ahmed
 	 */
 	private void createDatabaseSchema() {
 

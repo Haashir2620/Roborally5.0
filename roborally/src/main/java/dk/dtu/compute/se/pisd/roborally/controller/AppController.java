@@ -63,7 +63,7 @@ AppController implements Observer {
          * If an existing game is in progress, it offers the option to save or abort the current game.
          * A new game environment is set up with the specified board and players, and the game state is saved to the database.
          * Finally, the game view is updated to reflect the new game setup.
-         * @author
+         * @author Asim Raja, Muhammad Feyez, Ali Hassan
          *
          * @param result The optional integer from the player number choice dialog.
          * @param result1 The optional integer from the board selection choice dialog.
@@ -101,8 +101,6 @@ AppController implements Observer {
 
             }
 
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
             repository.createGameInDB(gameController.board, result1.get());
             roboRally.createBoardView(gameController);
@@ -120,10 +118,12 @@ AppController implements Observer {
 
     /**
      * /**
-     *  * Loads a game from the database based on user selection. The method retrieves a list of saved games,
-     *  * displays them in a reversed order for user selection, and loads the selected game. It sets up the game
-     *  * environment by initializing a new GameController with the loaded board, reassigns the players to their
-     *  * saved positions, and updates the game view to reflect the current game state.
+     * Loads a game from the database based on user selection. The method retrieves a list of saved games,
+     * displays them in a reversed order for user selection, and loads the selected game. It sets up the game
+     * environment by initializing a new GameController with the loaded board, reassigns the players to their
+     * saved positions, and updates the game view to reflect the current game state.
+     *
+     * @author Mohammmad Haashir khan, Amaan Ahmed
      *  */
 
     public void loadGame() {

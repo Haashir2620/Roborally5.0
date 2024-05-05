@@ -38,6 +38,7 @@ import java.io.*;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Muhammed Feyez, Asim raja
+ * LoadBoard is a class that loads the board from the file and saves the board to the file.
  */
 public class LoadBoard {
 

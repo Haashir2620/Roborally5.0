@@ -149,7 +149,7 @@ public class GameController {
     }
 
     /**
-     * execute the programs
+     * This method executes the programs
      */
     public void executePrograms() {
         board.setStepMode(false);
@@ -157,7 +157,7 @@ public class GameController {
     }
 
     /**
-     * execute a step
+     * This method executes the step
      */
     public void executeStep() {
         board.setStepMode(true);
@@ -165,7 +165,7 @@ public class GameController {
     }
 
     /**
-     * continues the program
+     * This method continues the program
      */
     private void continuePrograms() {
         do {
@@ -178,7 +178,6 @@ public class GameController {
      * After executing the command, it updates the game phase, advances the game to the next player, and, if all players have acted,
      * progresses to the next step or restarts the programming phase.
      */
-
 
     private void executeNextStep() {
 

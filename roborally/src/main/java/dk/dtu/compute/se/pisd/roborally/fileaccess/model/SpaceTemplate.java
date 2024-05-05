@@ -31,6 +31,7 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * SpaceTemplate makes a list of walls and actions that can be on the spaces in the board.
  *
  */
 public class SpaceTemplate {

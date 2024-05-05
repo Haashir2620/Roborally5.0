@@ -79,6 +79,20 @@ class Repository implements IRepository {
 		this.connector = connector;
 	}
 
+	/**
+	 * Attempts to create a new game record in the database along with associated player and card field records.
+	 * This method initializes a transaction to handle the creation of game, player, and card entries
+	 * atomically, ensuring that all database operations either complete successfully or rollback entirely.
+	 * If the game already has an assigned ID, it will not proceed with the database insertion.
+	 *
+	 * @param game The game board object containing state information to be stored.
+	 * @param k An integer representing additional game data, such as the selected board configuration.
+	 * @return true if the game was successfully created in the database; false otherwise.
+	 * @throws SQLException if any database operations fail during execution.
+	 *
+	 * @author Mohamamd Haashir khan, Amaan Ahmed
+	 *
+	 */
 
 	@Override
 	public boolean createGameInDB(Board game, int k) {
@@ -153,14 +167,18 @@ class Repository implements IRepository {
 	}
 
 	/**
-	 * @param game is the board that is used for the game with all the information on the players and so on.
-	 *             This method updates the game in the database.
-	 *             That means it takes the already create game in the database and updates it.
-	 *             So it updates both the game, the players, and the cards
-	 *             this method only updates the game.
-	 *             Then it calls 2 methods "updatePlayersInDB" and "updateCardfieldsInDB" to update the rest.
-	 * @return true if the game has been updated
+	 * Updates the existing game state in the database including related player and card field entries.
+	 * This method handles the update within a transaction to ensure that all modifications are either
+	 * fully applied or completely rolled back. It first updates the game's basic details such as the
+	 * current player, phase, and step, then proceeds to update player and card field data.
+	 *
+	 * @param game The game object containing updated state information.
+	 * @return true if the database update operation is successful, false if it fails or if the game ID is null.
+	 * @throws SQLException if any issues occur during database access or update operations.,
+	 *
+	 * @author Mohammad Haashir Khan, Amaan Ahmed.
 	 */
+
 	@Override
 	public boolean updateGameInDB(Board game) {
 		assert game.getGameId() != null;
@@ -205,10 +223,17 @@ class Repository implements IRepository {
 	}
 
 	/**
-	 * @param id is the game id the player chose to play again.
-	 *           this method loads the game that has been chosen by the player. that means it returns a board.
-	 * @return a board if the game do exist.
+	 * Loads a game from the database using the specified game ID. This method retrieves the game's data,
+	 * including board configuration, current player, game phase, and steps from the database and reconstructs
+	 * the game state. It also loads associated players and card fields to fully restore the game context.
+	 *
+	 * @param id The unique identifier of the game to load from the database.
+	 * @return The loaded Board object fully populated with its corresponding state, or null if no valid game is found or an error occurs.
+	 * @throws SQLException if any database access errors occur during the process.
+	 *
+	 * @author Mohammad Haashir Khan, Amaan Ahmed.
 	 */
+
 	@Override
 	public Board loadGameFromDB(int id) {
 		Board game;
@@ -254,7 +279,7 @@ class Repository implements IRepository {
 	}
 
 	/**
-	 * this method is used to show the games that is in the database so the player can choose between them.
+	 * This is a method, that is used for choosing games from the database.
 	 *
 	 * @return the result that is list of all the games.
 	 */
@@ -276,6 +301,17 @@ class Repository implements IRepository {
 		return result;
 	}
 
+	/**
+	 * Creates player records in the database for each player in the game. This method iterates through each player
+	 * in the provided game object, inserting their current state into the database. This includes the player's
+	 * name, color, position, heading, checkpoint value, and health points.
+	 *
+	 * @param game The game object containing the players to be stored in the database.
+	 * @throws SQLException If there is an error executing the database commands, such as a connection issue
+	 *                      or a syntax error in the SQL statement.
+	 *
+	 * @author Mohamamd Haashir Khan
+	 */
 
 	private void createPlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -299,10 +335,18 @@ class Repository implements IRepository {
 
 		rs.close();
 	}
-
 	/**
+	 * Loads player data from the database into the specified game object. This method retrieves all players
+	 * associated with a given game ID and initializes them within the game. It sets each player's attributes such as
+	 * name, color, position, heading, checkpoint value, and health points based on the stored data.
 	 *
+	 * @param game The game object where the players will be loaded into.
+	 * @throws SQLException If there is a failure in database communication or query execution,
+	 *                      potentially leading to incomplete player data retrieval.
+	 *
+	 * @author Mohammad Haashir Khan
 	 */
+
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -333,10 +377,18 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-
 	/**
+	 * Updates the player details in the database for a specific game. This method synchronizes the current
+	 * state of players in the game object with the database records. It updates the players' positions, headings,
+	 * checkpoint values, and health points based on their current state in the game.
 	 *
+	 * @param game The game object whose player data is to be updated in the database.
+	 * @throws SQLException If any SQL error occurs during the update process, ensuring the method caller
+	 *                      can handle such exceptions appropriately.
+	 *
+	 * @author Mohamamd Haashir Khan
 	 */
+
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
@@ -356,6 +408,17 @@ class Repository implements IRepository {
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Populates the database with card field data for each player in a game. This method iterates through
+	 * each player and their program and hand card fields to store the visibility, type, and command of each card.
+	 * It creates new rows for each card field in the database and sets the corresponding attributes.
+	 *
+	 * @param game The game object containing players whose card field data needs to be stored.
+	 * @throws SQLException If any SQL error occurs during the process, allowing for appropriate exception handling.
+	 *
+	 * @author Mohamamd Haashir Khan, Amaan Ahmed
+	 */
 
 	private void createCardFieldsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatementU();
@@ -406,6 +469,16 @@ class Repository implements IRepository {
 		}
 	}
 //---------------------------------------------------------------------------------------------------------------------
+	/**
+	 * Loads card field data from the database for each player in a specified game. It retrieves the
+	 * visibility, position, and associated command for each card field stored in the database and
+	 * updates the corresponding objects in the game model.
+	 *
+	 * @param game The game object whose players' card fields are being populated.
+	 * @throws SQLException If any SQL issues occur while retrieving data.
+	 *
+	 * @author Mohammmad Haashir khan, Amaan Ahmed
+	 */
 
 	private void loadCardFieldsFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatement();
@@ -437,6 +510,16 @@ class Repository implements IRepository {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	/**
+	 * Updates the database records for card fields associated with each player in a specified game.
+	 * This method synchronizes the visibility status and command of each card field in the game model with the database.
+	 * It processes each card field, updating its stored properties or setting them to null if no command is assigned.
+	 *
+	 * @param game The game object whose card fields are being updated in the database.
+	 * @throws SQLException If any SQL issues occur during the update process, ensuring robust data handling.
+	 *
+	 * @author Mohammmad Haashir khan, Amaan Ahmed
+	 */
 
 	private void updateCardFieldsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCardFieldStatementU();

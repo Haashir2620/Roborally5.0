@@ -33,11 +33,13 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  */
 
 /**
+ * @author Mohamamd Haashir khan,
  * add checkpoint
  */
 
 /**
- * add hp
+ *@author Ali Hassan, Asim Raja, Muhammed Feyez
+ * added hp for pits
  */
 public class Player extends Subject {
 
