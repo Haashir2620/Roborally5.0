@@ -46,7 +46,7 @@ class PitTest {
         player1.setSpace(board.getSpace(4, 7));
         int hp = player1.getHp();
         gameController.performFieldActions();
-        Assertions.assertEquals(player1.getHp(), hp - 1, "the old hp - 1 ");
+        Assertions.assertEquals(player1.getHp(), hp -1, "the old hp - 1 ");
 
     }
 }

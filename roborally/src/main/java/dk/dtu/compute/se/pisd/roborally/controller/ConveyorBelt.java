@@ -44,10 +44,12 @@ public class ConveyorBelt extends FieldAction {
     public Heading getHeading() {
         return heading;
     }
+   // heading angiver retningen af transportbåndet.
 
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
+    //Getter- og setter-metoderne giver mulighed for at læse og ændre retningen.
 
     /**
      * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
@@ -56,7 +58,7 @@ public class ConveyorBelt extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
         if (player == null) {
-            return false; // Hvis der ikke er nogen spiller, afslut tidligt
+            return false; // Metoden retunerer false,hvis der ikke er nogen spiller på space, afslut tidligt
         }
 
         Heading heading = player.getHeading(); //  henter retningen fra spilleren
@@ -64,12 +66,12 @@ public class ConveyorBelt extends FieldAction {
 
         if (space2 != null && space2.getPlayer() == null) { // Tjek om nabopladsen er tom
             try {
-                gameController.moveToSpace(player, space2, heading);
+                gameController.moveToSpace(player, space2, heading); //Forsøg at flytte spilleren til nabopladsen ved hjælp af gameController.moveToSpace metoden.
                 player.setSpace(space2); // Opdater spillerens placering
             } catch (ImpossibleMoveException e) {
                 // Log exception eller håndter den som nødvendigt
             }
-            return true;
+            return true; //Retunere tru hvis handligen er fuldført
         } else {
             return false; // Returner false hvis der ikke er nogen gyldig naboplads
         }

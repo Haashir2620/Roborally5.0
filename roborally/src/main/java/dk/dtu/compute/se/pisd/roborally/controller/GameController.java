@@ -482,7 +482,7 @@ public class GameController {
                 assert target.getPlayer() == null : target; // make sure target is free now
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
-            }
+            } // Exepteption gør at det ikke er muligt at rykke en robot, derfor sker der ikke noget.
         }
         player.setSpace(space);
     }}

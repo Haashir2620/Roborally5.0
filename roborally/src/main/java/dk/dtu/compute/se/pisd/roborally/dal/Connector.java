@@ -47,6 +47,7 @@ class Connector {
 	private static final String PASSWORD = "Rep68hfq";
 
 	private static final String DELIMITER = ";;";
+ // Disse variabler indeholder konfigurationsdata for databasens forbindelse,
 
 	private Connection connection;
 
@@ -58,6 +59,7 @@ class Connector {
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			//String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
+			//opretter forbindelse til databasen med url,username. og password
 
 			createDatabaseSchema();
 		} catch (SQLException e) {
@@ -65,8 +67,10 @@ class Connector {
 			//      exit in a more graceful way
 			e.printStackTrace();
 			// Platform.exit();
+			//Hvis der opstår en SQLException, bliver fejlen udskrevet,
+
 		}
-	}
+	} // denne konstruktør opretter forbindelse til databasen
 
 	/**
 	 * creates the databaseschema in mysql.

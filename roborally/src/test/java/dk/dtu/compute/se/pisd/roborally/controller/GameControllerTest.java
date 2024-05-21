@@ -45,14 +45,23 @@ class GameControllerTest {
     void moveForward() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
+        //brættet og den aktuelle spiller hentes.
 
         gameController.moveForward(current);
+        // kaldes for at flytte den aktuelle spiller fremad.
 
-        //Syntaks: Assertions.assertEquals(forventetVærdi, faktiskVærdi, fejlmeddelelse);
+
 
         Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
-        Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading SOUTH!");
+        //Spilleren er flyttet til den forventede plads (0,1).
+
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        //Spilleren har den forventede retning Syd,
+
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
+        //Den oprindelige plads (0,0) er nu tom.
+
+        //Syntaks: Assertions.assertEquals(forventetVærdi, faktiskVærdi, fejlmeddelelse);
     }
 
 
@@ -82,7 +91,7 @@ class GameControllerTest {
 
         gameController.moveCurrentPlayerToSpace(board.getSpace(0, 3));
 
-        Assertions.assertEquals(player1, board.getSpace(0, 3).getPlayer(), "Player " + player1.getName() + " should beSpace (0,4)!");
+        Assertions.assertEquals(player1, board.getSpace(0, 3).getPlayer(), "Player " + player1.getName() + " should beSpace (0,3)!");
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
         Assertions.assertEquals(player2, board.getCurrentPlayer(), "Current player should be " + player2.getName() +"!");
     }
